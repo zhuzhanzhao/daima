@@ -1620,7 +1620,7 @@ showInfo() {
 			echo -e " ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}"
 			echo -e " ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
 			echo -e " ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-			echo -e " ${BLUE}底层安全传输(tls)：${PLAIN}${RED}XTLS${PLAIN}"
+			echo -e " ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
 		elif [[ "$ws" == "false" ]]; then
 			echo -e " ${BLUE}IP(address):  ${PLAIN}${RED}${IP}${PLAIN}"
 			echo -e " ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
