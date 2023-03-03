@@ -1612,6 +1612,8 @@ showInfo() {
 			return 0
 		fi
 		if [[ "$xtls" == "true" ]]; then
+	       	link="vless://${link}"  
+	          qrlink="https://api.mohuajz.top/qr/?text=${link}&size=300${link}"
 			echo -e " ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
 			echo -e " ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
 			echo -e " ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
@@ -1621,6 +1623,8 @@ showInfo() {
 			echo -e " ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
 			echo -e " ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
 			echo -e " ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
+	          echo -e " ${BLUE}vmess链接: ${PLAIN}$YELLOW$link$PLAIN"
+	          echo -e " ${BLUE}二维码链接:${PLAIN} $GREEN$qrlink$PLAIN"
 		elif [[ "$ws" == "false" ]]; then
 			echo -e " ${BLUE}IP(address):  ${PLAIN}${RED}${IP}${PLAIN}"
 			echo -e " ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
