@@ -221,7 +221,7 @@ function vpn005(){
 bash <(curl -s -L https://raw.githubusercontent.com/zhuzhanzhao/daima/main/v23.sh) 
 } 
 #106 【 x-ui 一键安装脚本 】
-function x-ui(){
+function xui(){
 bash <(curl -s -L https://raw.githubusercontent.com/zhuzhanzhao/daima/main/x-ui.sh) 
 }
 #107 【 ssr 一键安装脚本 】
@@ -323,7 +323,7 @@ function start_menu(){
            vpn005
 	;;
 		6 )
-           x-ui
+           xui
 	;;
 		7 )
            ssr
