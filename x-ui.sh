@@ -154,24 +154,24 @@ install_x-ui() {
     echo -e "${green}x-ui v${last_version}${plain} 安装完成，面板已启动，"
     echo -e "x-ui作者:失落的梦/管理脚本使用方法: "
     echo -e "----------------------------------------------"
-    echo -e ""有问题联系我修改：
-    echo -e ""博客：https://www.kehu33.asia
-    echo -e ""博客：https://www.vcxm789.asia
-    echo -e ""QQ： 1150315739
-    echo -e ""微信：Falltoher-1314
+    echo -e ""有问题联系我修改："
+    echo -e ""博客：https://www.kehu33.asia"
+    echo -e ""博客：https://www.vcxm789.asia"
+    echo -e ""QQ： 1150315739"
+    echo -e ""微信：Falltoher-1314"
     echo -e ""----------------------------------------------"
-    echo -e "x-ui              - 显示管理菜单 (功能更多)"
-    echo -e "x-ui start        - 启动 x-ui 面板"
-    echo -e "x-ui stop         - 停止 x-ui 面板"
-    echo -e "x-ui restart      - 重启 x-ui 面板"
-    echo -e "x-ui status       - 查看 x-ui 状态"
-    echo -e "x-ui enable       - 设置 x-ui 开机自启"
-    echo -e "x-ui disable      - 取消 x-ui 开机自启"
-    echo -e "x-ui log          - 查看 x-ui 日志"
-    echo -e "x-ui v2-ui        - 迁移本机器的 v2-ui 账号数据至 x-ui"
-    echo -e "x-ui update       - 更新 x-ui 面板"
-    echo -e "x-ui install      - 安装 x-ui 面板"
-    echo -e "x-ui uninstall    - 卸载 x-ui 面板"
+    echo -e "xui              - 显示管理菜单 (功能更多)"
+    echo -e "xui start        - 启动 x-ui 面板"
+    echo -e "xui stop         - 停止 x-ui 面板"
+    echo -e "xui restart      - 重启 x-ui 面板"
+    echo -e "xui status       - 查看 x-ui 状态"
+    echo -e "xui enable       - 设置 x-ui 开机自启"
+    echo -e "xui disable      - 取消 x-ui 开机自启"
+    echo -e "xui log          - 查看 x-ui 日志"
+    echo -e "xui v2-ui        - 迁移本机器的 v2-ui 账号数据至 x-ui"
+    echo -e "xui update       - 更新 x-ui 面板"
+    echo -e "xui install      - 安装 x-ui 面板"
+    echo -e "xui uninstall    - 卸载 x-ui 面板"
     echo -e "----------------------------------------------"
 }
 
