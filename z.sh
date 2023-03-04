@@ -220,7 +220,7 @@ bash <(curl -s -L https://raw.githubusercontent.com/zhuzhanzhao/daima/main/v21.s
 function vpn005(){
 bash <(curl -s -L https://raw.githubusercontent.com/zhuzhanzhao/daima/main/v23.sh) 
 } 
-#106 【 xui 一键安装脚本 】
+#106 【 x-ui 一键安装脚本 】
 function vpn011(){
 bash <(curl -s -L https://raw.githubusercontent.com/zhuzhanzhao/daima/main/x-ui.sh) 
 }
