@@ -1,4 +1,4 @@
-.#!/bin/bash
+#!/bin/bash
 
 RED="\033[31m"    # Error message
 GREEN="\033[32m"  # Success message
@@ -8,12 +8,8 @@ PLAIN='\033[0m'
 # 以下网站是随机从Google上找到的无广告网站，不喜欢请改成其他网址，以http或https开头
 # 搭建好后无法打开伪装域名，可能是反代网站挂了，请在网站留言，或者发作者微信，QQ，以便替换新的网站
 SITES=(
-	https://www.vcxm789.asia/
-	https://www.kehu33.asia/
 	https://oneprovide.net/aff.php?aff=179/
 	https://oneprovide.net/aff.php?aff=179/
-	https://www.kehu33.asia/
-	https://www.vcxm789.asia/
 	http://www.zhuizishu.com/
 	http://xs.56dyc.com/
 	http://www.ddxsku.com/
@@ -27,6 +23,7 @@ SITES=(
 	http://www.bequgexs.com/
 	http://www.tjwl.com/
 	https://iaclouds.com/aff.php?aff=524/
+	https://agent.oridc.com/
 )
 
 CONFIG_FILE="/usr/local/etc/xray/config.json"
@@ -37,8 +34,8 @@ checkwarp(){
 }
 
 V6_PROXY=""
-IP=$(curl -s4m8 http://ipget.net)
-[[ "$?" != "0" ]] && IP=$(curl -s6m8 http://ipget.net) && V6_PROXY="https://gh-proxy-misakano7545.koyeb.app/"
+IP=$(curl -s4m8 http://ip.sb)
+[[ "$?" != "0" ]] && IP=$(curl -s6m8 http://ip.sb) && V6_PROXY="https://gh-proxy-misakano7545.koyeb.app/"
 [[ $V6_PROXY != "" ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 
 BT="false"
@@ -207,7 +204,7 @@ getData() {
 			CERT_FILE="/usr/local/etc/xray/${DOMAIN}.pem"
 			KEY_FILE="/usr/local/etc/xray/${DOMAIN}.key"
 		else
-			resolve=$(curl -sm8 ipget.net/?ip=${DOMAIN})
+			resolve=$(curl -sm8 ip-api.com/json?ip=${DOMAIN})
 			res=$(echo -n ${resolve} | grep ${IP})
 			if [[ -z "${res}" ]]; then
 				colorEcho ${BLUE} "${DOMAIN} 解析结果：${resolve}"
@@ -302,12 +299,12 @@ getData() {
 		colorEcho $BLUE " 请选择伪装站类型:"
 		echo "   1) 静态网站：小白不建议使用这个(位于/usr/share/nginx/html)"
 		echo "   2) 作者随机填的几个站(随机选择一个)"
-                echo "   3) 世嘉maimai日本官网(https://maimai.sega.jp)"
-		echo "   4) 高清壁纸站(https://bing.ioliu.cn)"
+		echo "   3) 高清壁纸站(https://bing.ioliu.cn)"
+		echo "   4) 奇峰网址(https://agent.oridc.com)(强烈推荐使用)"		
 		echo "   5) 自定义反代站点(需以http或者https开头)"
-		read -p "  请选择伪装网站类型[默认:高清壁纸站]" answer
+		read -p "  请选择伪装网站类型[默认:4.奇峰网站]" answer
 		if [[ -z "$answer" ]]; then
-			PROXY_URL="https://bing.ioliu.cn"
+			PROXY_URL="https://agent.oridc.com"
 		else
 			case $answer in
 				1) PROXY_URL="" ;;
@@ -326,8 +323,8 @@ getData() {
 						fi
 					done
 					;;
-                                3) PROXY_URL="https://imeizi.me" ;;
-				4) PROXY_URL="https://bing.ioliu.cn" ;;
+				3) PROXY_URL="https://bing.ioliu.cn" ;;
+				4) PROXY_URL="https://agent.oridc.com" ;;
 				5)
 					read -p " 请输入反代站点(以http或者https开头)：" PROXY_URL
 					if [[ -z "$PROXY_URL" ]]; then
@@ -1579,7 +1576,7 @@ showInfo() {
 	echo -n -e " ${BLUE}Xray运行状态：${PLAIN}"
 	statusText
 	echo -e " ${BLUE}Xray配置文件: ${PLAIN} ${RED}${CONFIG_FILE}${PLAIN}"
-	colorEcho $BLUE " Xray配置信息："
+	colorEcho $BLUE " Xray配置信息：${PLAIN} ${RED}${IP}${PLAIN}"
 
 	getConfigFileInfo
 
@@ -1612,8 +1609,6 @@ showInfo() {
 			return 0
 		fi
 		if [[ "$xtls" == "true" ]]; then
-	       	link="vless://${link}"  
-	          qrlink="https://api.mohuajz.top/qr/?text=${link}&size=300${link}"
 			echo -e " ${BLUE}IP(address): ${PLAIN} ${RED}${IP}${PLAIN}"
 			echo -e " ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
 			echo -e " ${BLUE}id(uuid)：${PLAIN}${RED}${uid}${PLAIN}"
@@ -1622,9 +1617,7 @@ showInfo() {
 			echo -e " ${BLUE}传输协议(network)：${PLAIN} ${RED}${network}${PLAIN}"
 			echo -e " ${BLUE}伪装类型(type)：${PLAIN}${RED}none$PLAIN"
 			echo -e " ${BLUE}伪装域名/主机名(host)/SNI/peer名称：${PLAIN}${RED}${domain}${PLAIN}"
-			echo -e " ${BLUE}底层安全传输(tls)：${PLAIN}${RED}TLS${PLAIN}"
-	          echo -e " ${BLUE}vmess链接: ${PLAIN}$YELLOW$link$PLAIN"
-	          echo -e " ${BLUE}二维码链接:${PLAIN} $GREEN$qrlink$PLAIN"
+			echo -e " ${BLUE}底层安全传输(tls)：${PLAIN}${RED}XTLS${PLAIN}"
 		elif [[ "$ws" == "false" ]]; then
 			echo -e " ${BLUE}IP(address):  ${PLAIN}${RED}${IP}${PLAIN}"
 			echo -e " ${BLUE}端口(port)：${PLAIN}${RED}${port}${PLAIN}"
@@ -1659,32 +1652,25 @@ showLog() {
 menu() {
 	clear
 	echo "########################################################################################################################"
-	echo -e "#                     ${RED}Xray一键安装脚本${PLAIN}
-#"
-	echo -e "#${GREEN}作者${PLAIN}: 失落的梦                          
-#"
-	echo -e "# ${GREEN}博客2${PLAIN}:https://www.vcxm789.asia/ 
-#"
-	echo -e "# ${GREEN}博客1${PLAIN}:https://www.kehu33.asia
-#"
-	echo -e "# ${GREEN}TG群${PLAIN}: https://https://t.me/vpsjiaoliudajian    
-#"
-	echo -e "# ${GREEN}微信${PLAIN}: Falltoher-1314
-#"
-	echo -e "# ${GREEN} qq${PLAIN}: 1150315739 
-#"
+	echo -e "#                     ${RED}Xray一键安装脚本${PLAIN} "
+	echo -e "#${GREEN}作者${PLAIN}: 失落的梦              "              
+	echo -e "# ${GREEN}博客1${PLAIN}:https://www.kehu33.asia    "
+	echo -e "# ${GREEN}TG群${PLAIN}: https://https://t.me/vpsjiaoliudajian      "
+	echo -e "# ${GREEN}微信${PLAIN}: Falltoher-1314    "
+	echo -e "# ${GREEN} qq${PLAIN}: 1150315739  "
+	echo -e "# ${GREEN} $YouTube{PLAIN}: https://www.youtube.com/channel/UCmteg7BSPK8pTFvKAlkBoEw     "	
 	echo "##########################################################################################################################"
 	echo " —————————————————————————————————————————安装协议选项———————————————————————————————"
 	echo -e "  ${GREEN}1.${PLAIN}   安装Xray-VMESS"
-	echo -e "  ${GREEN}2.${PLAIN}   安装Xray-${BLUE}VMESS+mKCP${PLAIN}"
+	echo -e "  ${GREEN}2.${PLAIN}   安装Xray-${BLUE}VMESS+mKCP"
 	echo -e "  ${GREEN}3.${PLAIN}   安装Xray-VMESS+TCP+TLS"
 	echo -e "  ${GREEN}4.${PLAIN}   安装Xray-${BLUE}VMESS+WS+TLS${PLAIN}${RED}(推荐)${PLAIN}"
-	echo -e "  ${GREEN}5.${PLAIN}   安装Xray-${BLUE}VLESS+mKCP${PLAIN}"
+	echo -e "  ${GREEN}5.${PLAIN}   安装Xray-${BLUE}VLESS+mKCP"
 	echo -e "  ${GREEN}6.${PLAIN}   安装Xray-VLESS+TCP+TLS"
 	echo -e "  ${GREEN}7.${PLAIN}   安装Xray-${BLUE}VLESS+WS+TLS${PLAIN}${RED}(可过cdn)${PLAIN}"
 	echo -e "  ${GREEN}8.${PLAIN}   安装Xray-${BLUE}VLESS+TCP+XTLS${PLAIN}${RED}(推荐)${PLAIN}"
 	echo -e "  ${GREEN}9.${PLAIN}   安装${BLUE}Trojan${PLAIN}${RED}(推荐)${PLAIN}"
-	echo -e "  ${GREEN}10.${PLAIN}  安装${BLUE}Trojan+XTLS${PLAIN}${RED}(推荐)${PLAIN}"
+	echo -e "  ${GREEN}10.${PLAIN}  安装${BLUE}Trojan+XTLS"
 	echo " ————————————————————————————————————Xray安装之后查看项目}————————————————————————————————————"
 	echo -e "  ${GREEN}11.${PLAIN}  更新Xray"
 	echo -e "  ${GREEN}12.  ${RED}卸载Xray${PLAIN}"
@@ -1695,13 +1681,11 @@ menu() {
 	echo " ——————————————"
 	echo -e "  ${GREEN}16.${PLAIN}  查看Xray配置"
 	echo -e "  ${GREEN}17.${PLAIN}  查看Xray日志"
-
 	echo " ———————————————————————————————结束了请按 ⬆ 数字选择安装————————————————————————————————————————"
 	echo -e "  ${GREEN}0.${PLAIN}   退出"
 	echo -n " 当前状态："
 	statusText
 	echo
-
 	read -p " 请选择操作[0-17]：" answer
 	case $answer in
 		0) exit 1 ;;
