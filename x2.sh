@@ -429,7 +429,7 @@ getCert() {
 			systemctl start cron
 			systemctl enable cron
 		fi
-		curl -sL https://get.acme.sh | sh -s email=hijk.pw@protonmail.sh
+		curl -sL https://get.acme.sh | sh -s email= Zhaoapple1103@163.com
 		source ~/.bashrc
 		~/.acme.sh/acme.sh --upgrade --auto-upgrade
 		~/.acme.sh/acme.sh --set-default-ca --server letsencrypt
