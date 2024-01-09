@@ -8,33 +8,39 @@ PLAIN='\033[0m'
 # 以下网站是随机从Google上找到的无广告网站，不喜欢请改成其他网址，以http或https开头
 # 搭建好后无法打开伪装域名，可能是反代网站挂了，请在网站留言，或者发作者微信，QQ，以便替换新的网站
 SITES=(
-	https://oneprovide.net/aff.php?aff=179/
-	http://www.zhuizishu.com/
-	http://xs.56dyc.com/
-	http://www.ddxsku.com/
-	http://www.biqu6.com/
-	https://www.wenshulou.cc/
-	http://www.55shuba.com/
-	http://www.39shubao.com/
-	https://www.23xsw.cc/
-	https://www.jueshitangmen.info/
-	https://www.zhetian.org/
-	http://www.bequgexs.com/
-	http://www.tjwl.com/
-	https://iaclouds.com/aff.php?aff=524/
-	https://agent.oridc.com/
+	https://www.kehu33.asia/
+	https://www.iqiyi.com/
+	https://www.ixigua.com/
+	http://www.qishuxx.com/
+	https://www.txt80.cc/
+	https://www.bqg789.com/
+	https://www.txt99.org/
+	https://v.qq.com/
+	http://b.faloo.com/
+	https://www.bookben.net/
+	http://www.fbook.net/
+	https://shuqi.com/
+	https://www.jjwxc.net/
+	https://www.shukeba.com/
+	https://www.xiaxs.la/
+	https://www.shubl.com/
+	https://book.sfacg.com/
+	http://www.wzzww.com/
+	http://www.zongheng.com/
+	https://chuangshi.qq.com/
+	http://www.wjsw.com/
+	http://www.shuhai.com/
+	https://www.kehu33.asia/
+	http://www.bayueju.com/
+	https://www.17k.com/
 )
 
 CONFIG_FILE="/usr/local/etc/xray/config.json"
 OS=$(hostnamectl | grep -i system | cut -d: -f2)
 
-checkwarp(){
-	[[ -n $(wg 2>/dev/null) ]] && colorEcho $RED " 检测到WARP已打开，脚本中断运行" && colorEcho $YELLOW " 请关闭WARP之后再运行本脚本" && exit 1
-}
-
 V6_PROXY=""
 IP=$(curl -s4m8 ipget.net)
-[[ "$?" != "0" ]] && IP=$(curl -s6m8 ipget.net) && V6_PROXY="https://gh-proxy-misakano7545.koyeb.app/"
+[[ "$?" != "0" ]] && IP=$(curl -s6m8 ip.sb ) && V6_PROXY="https://gh-proxy-misakano7545.koyeb.app/"
 [[ $V6_PROXY != "" ]] && echo -e nameserver 2a01:4f8:c2c:123f::1 > /etc/resolv.conf
 
 BT="false"
@@ -205,7 +211,7 @@ getData() {
 			CERT_FILE="/usr/local/etc/xray/${DOMAIN}.pem"
 			KEY_FILE="/usr/local/etc/xray/${DOMAIN}.key"
 		else
-			resolve=$(curl -sm8 ipget.net/?ip=${DOMAIN})
+			resolve=$(curl -sm8 ip.sb/?ip=${DOMAIN})
 			res=$(echo -n ${resolve} | grep ${IP})
 			if [[ -z "${res}" ]]; then
 				colorEcho ${BLUE} "${DOMAIN} 解析结果：${resolve}"
@@ -316,7 +322,7 @@ getData() {
 						index=$(shuf -i0-${len} -n1)
 						PROXY_URL=${SITES[$index]}
 						host=$(echo ${PROXY_URL} | cut -d/ -f3)
-						ip=$(curl -sm8 ipget.net/?ip=${host})
+						ip=$(curl -sm8 ip.sb /?ip=${host})
 						res=$(echo -n ${ip} | grep ${host})
 						if [[ "${res}" == "" ]]; then
 							echo "$ip $host" >>/etc/hosts
@@ -551,8 +557,8 @@ configNginx() {
 				    charset utf-8;
 				
 				    # ssl配置
-				    ssl_protocols TLSv1.1 TLSv1.2;
-				    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;  #新增加 TLSv1.3 
+				    ssl_ciphers TLS13-AES-256-GCM-SHA384:TLS13-CHACHA20-POLY1305-SHA256:TLS13-AES-128-GCM-SHA256:TLS13-AES-128-CCM-8-SHA256:TLS13-AES-128-CCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
 				    ssl_ecdh_curve secp384r1;
 				    ssl_prefer_server_ciphers on;
 				    ssl_session_cache shared:SSL:10m;
@@ -1231,22 +1237,11 @@ install() {
 	fi
 	configXray
 	setSelinux
-	installBBR
 	start
 	showInfo
-	bbrReboot
 }
 
-bbrReboot() {
-	if [[ "${INSTALL_BBR}" == "true" ]]; then
-		echo
-		echo " 为使BBR模块生效，系统将在10秒后重启"
-		echo
-		echo -e " 您可以按 ctrl + c 取消重启，稍后输入 ${RED}reboot${PLAIN} 重启系统"
-		sleep 10
-		reboot
-	fi
-}
+
 
 update() {
 	res=$(status)
@@ -1661,7 +1656,6 @@ menu() {
 }
 
 checkSystem
-checkwarp
 
 action=$1
 [[ -z $1 ]] && action=menu
